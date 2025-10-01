@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="color-scheme" content="light dark" />
+  <title>Modern Pink Landing</title>
+
+  <style>
+    :root{
+      /* 🎨 Pink palette — tweak these if you want a different pink vibe */
+      --pink-1:#ff5fa2;
+      --pink-2:#ff7eb3;
+      --pink-3:#f72585; /* accent */
+
+      --text:#111827;
+      --surface:rgba(255,255,255,.6);
+      --border:rgba(255,255,255,.35);
+      --shadow:rgba(255,105,180,.25);
+    }
+    @media (prefers-color-scheme: dark){
+      :root{
+        --text:#f8fafc;
+        --surface:rgba(255,255,255,.08);
+        --border:rgba(255,255,255,.18);
+        --shadow:rgba(0,0,0,.35);
+      }
+    }
+
+    *{box-sizing:border-box;-webkit-font-smoothing:antialiased;moz-osx-font-smoothing:grayscale}
+    html,body{height:100%}
+    body{
+      margin:0;
+      min-height:100dvh;
+      display:grid;
+      place-items:center;
+      font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Inter,"Helvetica Neue",Arial,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";
+      color:var(--text);
+      overflow:hidden;
+      /* animated pink gradient background */
+      background:
+        radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,.35), transparent 60%),
+        linear-gradient(120deg, var(--pink-1), var(--pink-2));
+      background-size:200% 200%;
+      animation:moveGradient 18s ease infinite;
+    }
+    @keyframes moveGradient{
+      0%{background-position:0% 50%}
+      50%{background-position:100% 50%}
+      100%{background-position:0% 50%}
+    }
+
+    /* soft floating blobs for a dreamy modern feel */
+    .blobs{position:absolute;inset:-20vmax;pointer-events:none;filter:blur(40px) saturate(1.1);opacity:.5}
+    .blob{
+      position:absolute;width:40vmax;height:40vmax;border-radius:50%;
+      background:radial-gradient(circle at 30% 30%, #ffd1e8, rgba(255,255,255,0) 70%);
+      mix-blend-mode:screen;
+      animation:float 30s ease-in-out infinite;
+    }
+    .blob:nth-child(2){top:10%;left:70%;animation-delay:-10s}
+    .blob:nth-child(3){top:70%;left:20%;animation-delay:-20s}
+    @keyframes float{
+      0%,100%{transform:translate(0,0) scale(1)}
+      50%{transform:translate(2vmax,-3vmax) scale(1.05)}
+    }
+
+    .container{
+      position:relative;
+      width:min(820px,92vw);
+      padding:clamp(24px,4vw,40px);
+      border-radius:24px;
+      background:var(--surface);
+      border:1px solid var(--border);
+      backdrop-filter:blur(14px) saturate(120%);
+      -webkit-backdrop-filter:blur(14px) saturate(120%);
+      box-shadow:0 15px 40px var(--shadow);
+      text-align:center;
+      transform:translateY(10px);
+      opacity:0;
+      animation:fadeUp .9s ease .2s both;
+    }
+    @keyframes fadeUp{
+      from{opacity:0;transform:translateY(16px)}
+      to{opacity:1;transform:translateY(0)}
+    }
+
+    .eyebrow{
+      display:inline-flex;align-items:center;gap:.6ch;
+      font-weight:600;letter-spacing:.12em;text-transform:uppercase;
+      font-size:clamp(12px,1.5vw,13px);opacity:.85;
+      padding:.45rem .8rem;border-radius:999px;border:1px solid var(--border);
+      background:rgba(255,255,255,.35);
+      backdrop-filter:blur(6px)
+    }
+    .dot{
+      width:.6rem;height:.6rem;border-radius:999px;
+      background:linear-gradient(135deg,var(--pink-1),var(--pink-2));
+      box-shadow:0 0 0 6px rgba(255,192,203,.15);
+      animation:pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse{0%,100%{transform:scale(1);opacity:1}50%{transform:scale(1.2);opacity:.7}}
+
+    h1{
+      font-size:clamp(36px,6vw,64px);
+      line-height:1.05;margin:18px 0 12px;
+      font-weight:800;letter-spacing:-.02em;
+      background:linear-gradient(180deg,#fff 30%,#ffe4f0 100%);
+      -webkit-background-clip:text;background-clip:text;color:transparent;
+      text-shadow:0 1px 1px rgba(255,255,255,.35);
+    }
+    p.lead{
+      font-size:clamp(16px,2.2vw,20px);
+      opacity:.9;margin:0 auto 24px;max-width:60ch;
+    }
+
+    .cta{
+      display:inline-flex;align-items:center;gap:.6rem;
+      padding:14px 22px;border-radius:14px;border:0;
+      font-weight:700;font-size:16px;color:#fff;cursor:pointer;text-decoration:none;
+      background:linear-gradient(135deg,var(--pink-1),var(--pink-2));
+      box-shadow:0 10px 25px rgba(255,105,180,.35), inset 0 1px rgba(255,255,255,.35);
+      transform:translateY(0);
+      transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
+    }
+    .cta:hover{transform:translateY(-2px);box-shadow:0 16px 35px rgba(255,105,180,.45)}
+    .cta:active{transform:translateY(0)}
+    .cta:focus-visible{outline:3px solid #ffd1e8;outline-offset:4px}
+
+    .subtle-link{display:block;margin-top:14px;opacity:.85;text-decoration:none;color:inherit}
+    .subtle-link:hover{opacity:1}
+    .footer{margin-top:28px;font-size:12px;opacity:.7}
+
+    /* Heart explosion animation */
+    .heart{
+      position:fixed;
+      font-size:24px;
+      pointer-events:none;
+      animation:heartFloat 2s ease-out forwards;
+      z-index:9999;
+    }
+    @keyframes heartFloat{
+      0%{
+        transform:translateY(0) scale(0) rotate(0deg);
+        opacity:1;
+      }
+      50%{
+        transform:translateY(-40vh) scale(1.2) rotate(180deg);
+        opacity:1;
+      }
+      100%{
+        transform:translateY(-80vh) scale(0.8) rotate(360deg);
+        opacity:0;
+      }
+    }
+
+    /* Respect users who prefer reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      *{animation:none !important;transition:none !important}
+    }
+  </style>
+</head>
+<body>
+  <!-- Soft animated blobs for a modern, dreamy pink vibe -->
+  <div class="blobs" aria-hidden="true">
+    <div class="blob" style="top:-10%;left:-5%"></div>
+    <div class="blob"></div>
+    <div class="blob"></div>
+  </div>
+
+  <main class="container">
+    <!-- ✏️ Change the text below to anything you like -->
+    <div class="eyebrow"><span class="dot"></span> <span >Welcome</span></div>
+
+    <h1 >Lamees Almarshad</h1>
+
+    <p class="lead">
+      I love my baby so much that I woudl give her the world xoxo
+    </p>
+
+    <a class="cta" href="#" onclick="loveBomb(event)">LOVE BOMB!</a>
+
+
+    
+  </main>
+
+  <script>
+    function loveBomb(e){
+      e.preventDefault();
+      
+      // Create 30 hearts at random positions
+      for(let i = 0; i < 30; i++){
+        setTimeout(() => {
+          const heart = document.createElement('div');
+          heart.className = 'heart';
+          heart.textContent = ['💖', '💕', '💗', '💓', '💝'][Math.floor(Math.random() * 5)];
+          
+          // Random starting position near click
+          heart.style.left = (Math.random() * 100) + 'vw';
+          heart.style.top = '50vh';
+          heart.style.fontSize = (Math.random() * 20 + 20) + 'px';
+          
+          // Random animation duration and delay
+          heart.style.animationDuration = (Math.random() * 1 + 1.5) + 's';
+          heart.style.animationDelay = (Math.random() * 0.3) + 's';
+          
+          document.body.appendChild(heart);
+          
+          // Remove heart after animation
+          setTimeout(() => heart.remove(), 2500);
+        }, i * 50);
+      }
+    }
+  </script>
+</body>
+</html>
